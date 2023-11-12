@@ -1,0 +1,222 @@
+<div class="grid" *ngIf="ListGioHang.length == 0 ">
+  <div class="col-12">
+    <h1>Giỏ của bạn trống trơn </h1>
+  </div>
+  <div class="col-12">
+    <span>Khi bạn thêm thứ gì đó vào giỏ hàng của mình, nó sẽ xuất hiện ở đây. Sẵn sàng để bắt đầu?</span>
+  </div>
+  <div class="col-12">
+    <button pButton pRipple label="Bắt đầu" styleClass="p-button-rounded p-button-info" (click)="BatDau()"></button>
+  </div>
+</div>
+
+<div class="grid mt-5" *ngIf="ListGioHang.length > 0">
+  <div class="col-1"></div>
+  <div class="col-11">
+    <h1 *ngIf="isThanhToan">Thanh toán</h1>
+    <h1 *ngIf="!isThanhToan">Giỏ hàng</h1>
+  </div>
+  <div class="col-1"></div>
+  <div class="col-7" *ngIf="isThanhToan">
+    <div class="grid">
+      <div class="col-12 pb-0">
+        <h6>Thông tin người mua hàng</h6>
+      </div>
+      <div class="col-12">
+        <span class="p-float-label">
+            <input type="text" [(ngModel)]="obj_thanhtoan.NguoiNhan_HoTen" pInputText id="NguoiNhan_HoTen" />
+            <label for="name">Họ tên người nhận: 
+                <span class="text-red-500">(*)</span>
+            </label>
+        </span>
+      </div>
+      <div class="col-12">
+        <span class="p-float-label">
+            <input type="text" [(ngModel)]="obj_thanhtoan.NguoiNhan_SoDienThoai" pInputText id="NguoiNhan_SoDienThoai"  />
+            <label for="name">Số điện thoại người nhận: 
+                <span class="text-red-500">(*)</span>
+            </label>
+        </span>
+      </div>
+      <div class="col-4">
+        <span class="p-float-label">
+            <p-dropdown [options]="ComboboxTinhThanh" [(ngModel)]="obj_thanhtoan.ID_TinhThanh" optionLabel="Value" id="ID_TinhThanh"
+                optionValue="ID" appendTo="body" (onChange)="onChangeLoadQuanHuyen($event); onChangeDiaChi()"
+                [filter]="true" filterBy="Value" [showClear]="true" [autoDisplayFirst]="false">
+            </p-dropdown>
+            <label for="name">Tỉnh/Thành phố: <span class="text-red-500">(*)</span></label>
+        </span>
+    </div>
+    <div class="col-4">
+        <span class="p-float-label">
+            <p-dropdown inputId="dropdown" [options]="ComboboxQuanHuyen" [(ngModel)]="obj_thanhtoan.ID_QuanHuyen" id="ID_QuanHuyen"
+                optionLabel="Value" optionValue="ID" appendTo="body"
+                (onChange)="onChangeLoadPhuongXa($event); onChangeDiaChi()" [filter]="true" filterBy="Value"
+                [showClear]="true" [autoDisplayFirst]="false">
+            </p-dropdown>
+            <label for="dropdown">Quận/huyện: <span class="text-red-500">(*)</span></label>
+        </span>
+    </div>
+    <div class="col-4">
+        <span class="p-float-label">
+            <p-dropdown [options]="ComboboxPhuongXa" [(ngModel)]="obj_thanhtoan.ID_PhuongXa" optionLabel="Value" id="ID_PhuongXa"
+                optionValue="ID" appendTo="body" [filter]="true" filterBy="Value" [showClear]="true"
+                [autoDisplayFirst]="false" (onChange)="onChangeDiaChi()">
+            </p-dropdown>
+            <label for="name">Phường/Xã: <span class="text-red-500">(*)</span></label>
+        </span>
+    </div>
+      <div class="col-12">
+        <span class="p-float-label">
+            <input type="text" [(ngModel)]="obj_thanhtoan.SoNha" (ngModelChange)="onChangeDiaChi()" pInputText  />
+            <label for="name">Số nhà: 
+                <span class="text-red-500">(*)</span>
+            </label>
+        </span>
+      </div>
+      <div class="col-12">
+        <span class="p-float-label">
+            <input type="text" [(ngModel)]="obj_thanhtoan.DiaChiNhanHang" (ngModelChange)="onChangeDiaChi()" pInputText  />
+            <label for="name">Địa chỉ nhận hàng: 
+                <span class="text-red-500">(*)</span>
+            </label>
+        </span>
+      </div>
+      <div class="col-12">
+        <span class="p-float-label">
+            <textarea id="float-input" rows="3" cols="30" pInputTextarea [(ngModel)]="obj_thanhtoan.GhiChu" [autoResize]="true"></textarea>
+            <label for="float-input">Ghi chú:</label>
+        </span>
+      </div>
+      <div class="col-12 pb-0">
+        <h6>Hình thức thanh toán</h6>
+      </div>
+      <div class="col-12 " *ngFor="let item of ComboboxHinhThucThanhToan">
+        <p-radioButton [inputId]="item.ID!.toString()" name="NguonTiepNhan"  label="{{item.Value}}" [value]="item.ID" [(ngModel)]="HinhThucThanhToan">
+        </p-radioButton>
+    </div>
+      <div class="col text-right">
+        <button pButton pRipple label="Quay lại" icon="pi pi-arrow-left" class="p-button-secondary mr-2" (click)="QuayLai()"></button>
+        <button pButton pRipple label="Thanh toán đơn hàng" icon="bx bx-credit-card" class="p-button-info" (click)="thanhToanDonHang()"></button>
+      </div>
+    </div>
+  </div>
+  <div class="card col-7" *ngIf="!isThanhToan">
+    <p-table #giohang [value]="ListGioHang" [columns]="cols" [loading]="loading_grid_giohang" [(selection)]="SelectGioHang"
+      [tableStyle]="{'min-width': '50rem'}" styleClass="my-table" [rows]="1000" [paginator]="false"  
+      (onHeaderCheckboxToggle)="onSelectAllDonHang($event)" (onRowSelect)="onRowSelectDonHang($event)" (onRowUnselect)="onRowUnselectDonHang($event)"
+      dataKey="ID_DonHang">
+      <ng-template pTemplate="header" let-columns>
+        <tr class="text-center">
+          <th class="sticky_header grid_header_color" style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th class="sticky_header grid_header_color" *ngFor="let col of columns"
+            [ngStyle]="{'min-width': col.width, 'text-align': 'center', 'color': 'white'}">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+        <tr>
+          <td><p-tableCheckbox [value]="rowData"></p-tableCheckbox></td>
+          <td *ngFor="let col of columns"
+            [ngStyle]="{'max-width': col.width , 'text-align': col.align, 'justify-content': col.align}"
+            [ngSwitch]="col.field">
+            <p *ngSwitchCase="'STT'">{{ i + 1 }}</p>
+            <p *ngSwitchCase="'HinhAnhTheHien'" style=" text-align: center; vertical-align: middle;" (click)="ShowDetailDoAn(rowData.ID_MonAn)">
+              <img style="margin-right: auto; margin-left: auto;" [src]="rowData.HinhAnhTheHien" [alt]="rowData.name"  width="85" class="shadow-4"  />
+            </p>
+            <p *ngSwitchCase="'DonGia'">{{ rowData.DonGia | number: '1.0-2' }}</p>
+            <p *ngSwitchCase="'ThanhTien'">{{ rowData.ThanhTien | number: '1.0-2' }}</p>
+            <p *ngSwitchCase="'SoLuong'">
+              <p-inputNumber  [showButtons]="true" buttonLayout="horizontal" 
+                inputId="horizontal" spinnerMode="horizontal" [(ngModel)]="rowData.SoLuong" [step]="1"
+                decrementButtonClass="p-button-rounded p-button-secondary"
+                incrementButtonClass="p-button-rounded p-button-secondary" incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus" mode="decimal" (ngModelChange)="capNhatDonHang(rowData)"></p-inputNumber>
+            </p>
+            <p *ngSwitchCase="'Task'">
+              <button pButton pRipple icon="pi pi-pencil" title="Chỉnh sửa"
+                class="p-button-rounded p-button-outlined button-tacvu-grid mr-2"></button>
+              <button pButton pRipple icon="pi pi-trash" title="Xóa"
+                class="p-button-rounded p-button-outlined p-button-danger button-tacvu-grid-danger"></button>
+            </p>
+            <div *ngSwitchDefault class="text-truncate" title="{{rowData[col.field]}}" style="text-align: left;">
+              {{rowData[col.field]}}
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ml-5"></div>
+  <div class="card col-3" [ngClass]="{'disable-div': isThanhToan }">
+    <h1>Cộng giỏ hàng</h1>
+    <hr>
+    <span style="font-size: 17px">
+      <b>Tạm tính:</b> {{GioHangSoTienTamTinh | number: '1.0-2'}} đ
+    </span>
+    <hr>
+    <span style="font-size: 17px">Phiếu ưu đãi</span>
+    <div class="grid mt-1">
+      <div class="col-8">
+        <input type="text" [(ngModel)]="MaUuDai" pInputText  />
+      </div>
+      <div class="col-4">
+        <button pButton pRipple label="Áp dụng" class="p-button-success" (click)="themUuDai()"></button>
+      </div>
+    </div>
+    
+    <hr *ngIf="ListUuDai.length > 0">
+    <div class="grid" *ngIf="ListUuDai.length > 0" >
+      <div class="col-12 mt-1" *ngFor="let val of ListUuDai">
+        <div class="grid">
+          <div class="col p-0"></div>
+          <div class="col p-0" style="margin-top: auto;">
+            <p-radioButton name="pizza" [value]="val.ID_KhuyenMai" [(ngModel)]="SelectedKhuyenMai" (ngModelChange)="TinhLaiSoTien()"></p-radioButton>
+          </div>
+          <div class="col-10 ml-3 p-0">
+            <!-- {{val.MaKhuyenMai}} <br> -->
+            {{val.TienGiamGia | number: '1.0-2'}} đ <br>
+            {{val.MoTa}}
+          </div>
+        </div>
+       
+      </div>
+    </div>
+    <hr>
+    <div class="grid">
+      <div class="col-5">
+        <b style="font-size: 17px;">Tổng </b>
+      </div>
+      <div class="col-7 text-right">
+        <span style="font-size: 20px; color: blueviolet;"> {{TongTienThanhToan | number: '1.0-2'}} đ</span>
+      </div>
+    </div>
+    <hr>
+    <div class="grid" *ngIf="!isThanhToan">
+      <div class="col-12 text-left">
+        <button pButton pRipple label="Thanh toán" class="p-button-info" [disabled]="!SelectGioHang || SelectGioHang.length == 0" (click)="thanhToan()"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast key="giohang"></p-toast>
+
+<app-doan-detail *ngIf="showDetailDoAnDialog" [ID_MonAn]="ID_MonAn" (closeDetailDoAn)="hideDetailDoAnDialog($event)">
+</app-doan-detail>
+
+
+<p-dialog id="album_anh_com" #album_anh_com [showHeader]="false" [(visible)]="isQrCodeDialog" [modal]="true"
+    [draggable]="false" [closable]="true" [resizable]="false" (onHide)="hideQrCodeDialog()">
+    <div class="btn-pinch-zoom">
+        <button pButton pRipple type="button" icon="pi pi-times" title="Đóng" class="p-button-danger p-button-rounded"
+            (click)="hideQrCodeDialog()">
+        </button>
+    </div>
+    <div>
+      <img id="image_zoom" class="img-pinch" #image_zoom [src]="URL_QR_CODE" />
+    </div>
+</p-dialog>

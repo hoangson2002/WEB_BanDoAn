@@ -1,0 +1,87 @@
+<header>
+  <div class="header-top">
+    <div class="container">
+      <ul class="header-social-container">
+        <li>
+          <a href="#" class="social-link">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="social-link">
+            <ion-icon name="logo-twitter"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="social-link">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="social-link">
+            <ion-icon name="logo-linkedin"></ion-icon>
+          </a>
+        </li>
+        <li *ngIf="ID_TaiKhoan == 1">
+          <button class="p-link layout-menu-button layout-topbar-button p-trigger"
+            (click)="layoutService.onMenuToggle()">
+            <i class="pi pi-bars"></i>
+          </button>
+        </li>
+      </ul>
+
+      <div class="header-alert-news">
+        <p>
+          <b>Giao hàng miễn phí</b> Trong tuần này đặt hàng trên - 500,000đ
+        </p>
+      </div>
+
+
+      <div class="header-top-actions">
+        <b class="txt-login" style="cursor: pointer;" (click)="login()" *ngIf="!ID_TaiKhoan">Đăng nhập | Đăng kí</b>
+        <!-- <b class="txt-login" style="cursor: pointer;" (click)="signup()">Đăng kí</b> -->
+        <select name="language">
+          <option value="VN">Việt Nam</option>
+          <option value="UK">English</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <a href="#" class="header-logo">
+        <img src="./assets/images/logo/logo.png" alt="Anon's logo" width="100%" height="70">
+      </a>
+
+      <div class="header-search-container">
+        <input type="search" name="search" class="search-field" placeholder="Tìm kiếm...">
+        <button class="search-btn">
+          <ion-icon name="search-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="header-user-actions">
+        <button *ngIf="ID_TaiKhoan > 0" class="action-btn" (click)="openCart()">
+          <ion-icon name="cart-outline"></ion-icon>
+          <span class="count">{{SoLuongDonDaDat}}</span>
+        </button>
+
+        <div class="dropdown" *ngIf="ID_TaiKhoan > 0">
+          <button class="action-btn">
+            <ion-icon name="person-outline"></ion-icon>
+          </button>
+          <div class="dropdown-content">
+            <a style="cursor: pointer;">{{fullName}}</a>
+            <a style="cursor: pointer;">Thông tin tài khoản</a>
+            <a style="cursor: pointer;">Đơn hàng của tôi</a>
+            <a style="cursor: pointer;" (click)="doimatkhau()">Đổi mật khẩu</a>
+            <a style="cursor: pointer;" (click)="logout()" >Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<app-taikhoan-doimatkhau *ngIf="doiMatKhauDiaLog" [DiaLog_DoiMatKhau]="doiMatKhauDiaLog" (DoiMatKhauDialogTra)="hideDoiMatKhauDiaLog($event)"></app-taikhoan-doimatkhau>

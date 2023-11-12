@@ -1,0 +1,98 @@
+<p-dialog id="dialog" [showHeader]="true" [(visible)]="taiKhoanDialog" [style]="{width: '700px'}"
+    header="{{LABEL_HEADER_DIALOG}}" [modal]="true" [draggable]="true" [resizable]="true">
+    <ng-template pTemplate="body">
+        <div class="grid m-3">
+            <div class="col-12">
+                <span class="p-float-label">
+                    <input type="text" [(ngModel)]="obj.TenDayDu" pInputText />
+                    <label for="name">Tên đầy đủ:
+                        <span class="text-red-500">(*)</span>
+                    </label>
+                </span>
+            </div>
+            <div class="col-12">
+                <span class="p-float-label">
+                    <input type="text" [(ngModel)]="obj.TenDangNhap" pInputText />
+                    <label for="name">Tên đầy đủ:
+                        <span class="text-red-500">(*)</span>
+                    </label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input type="text" [(ngModel)]="obj.SoDienThoai" pInputText />
+                    <label for="name">Số điện thoại:
+                        <span class="text-red-500">(*)</span>
+                    </label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input type="text" [(ngModel)]="obj.Email" pInputText />
+                    <label for="name">Email:
+                        <span class="text-red-500">(*)</span>
+                    </label>
+                </span>
+            </div>
+            <div class="col-4">
+                <span class="p-float-label">
+                    <p-dropdown [options]="ComboboxTinhThanh" [(ngModel)]="obj.ID_TinhThanh"
+                        optionLabel="Value" optionValue="ID" appendTo="body"
+                        (onChange)="onChangeLoadQuanHuyen($event); onChangeDiaChi()" [filter]="true" filterBy="Value"
+                        [showClear]="true" [autoDisplayFirst]="false">
+                    </p-dropdown>
+                    <label for="name">Tỉnh/Thành phố: <span class="text-red-500">(*)</span></label>
+                </span>
+            </div>
+            <div class="col-4">
+                <span class="p-float-label">
+                    <p-dropdown inputId="dropdown" [options]="ComboboxQuanHuyen"
+                        [(ngModel)]="obj.ID_QuanHuyen" optionLabel="Value" optionValue="ID" appendTo="body"
+                        (onChange)="onChangeLoadPhuongXa($event); onChangeDiaChi()" [filter]="true" filterBy="Value"
+                        [showClear]="true" [autoDisplayFirst]="false">
+                    </p-dropdown>
+                    <label for="dropdown">Quận/huyện: <span class="text-red-500">(*)</span></label>
+                </span>
+            </div>
+            <div class="col-4">
+                <span class="p-float-label">
+                    <p-dropdown [options]="ComboboxPhuongXa" [(ngModel)]="obj.ID_PhuongXa" optionLabel="Value"
+                        optionValue="ID" appendTo="body" [filter]="true" filterBy="Value" [showClear]="true"
+                        [autoDisplayFirst]="false" (onChange)="onChangeDiaChi()">
+                    </p-dropdown>
+                    <label for="name">Phường/Xã: <span class="text-red-500">(*)</span></label>
+                </span>
+            </div>
+            <div class="col-12">
+                <span class="p-float-label">
+                    <input type="text" [(ngModel)]="obj.SoNha" (ngModelChange)="onChangeDiaChi()" pInputText  />
+                    <label for="name">Số nhà: 
+                        <span class="text-red-500">(*)</span>
+                    </label>
+                </span>
+              </div>
+              <div class="col-12">
+                <span class="p-float-label">
+                    <input type="text" [(ngModel)]="obj.DiaChi" readonly (ngModelChange)="onChangeDiaChi()" pInputText  />
+                    <label for="name">Địa chỉ : 
+                        <span class="text-red-500">(*)</span>
+                    </label>
+                </span>
+              </div>
+              <div class="col-12">
+                <div class="grid">
+                    <div class="col-2" *ngFor="let val of comBoBoxGioTinh">
+                        <p-radioButton name="pizza" [value]="val.ID" [(ngModel)]="selectGioiTinh" label="{{val.Value}}"></p-radioButton>
+                    </div>
+                  </div>
+              </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Đóng" icon="pi pi-times" class="p-button-rounded p-button-secondary"
+            (click)="hideDialog()"></button>
+        <button pButton pRipple label="Lưu" icon="bx bx-import" class="p-button-rounded p-button-info"
+            (click)="save()"></button>
+    </ng-template>
+</p-dialog>

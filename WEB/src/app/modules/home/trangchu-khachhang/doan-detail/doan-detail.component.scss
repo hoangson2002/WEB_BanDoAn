@@ -1,0 +1,18 @@
+.grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 0.75rem;
+}
+
+.product-image-container {
+    padding-top: 80px;
+    margin: 0 2em;
+}
+
+.product-image-list {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+}

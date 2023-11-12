@@ -1,0 +1,96 @@
+// .grid>.col-12 {
+//   padding: 1rem 0.5rem 0.5rem 0.5rem;
+// }
+
+:host ::ng-deep #btn_tacvu .p-button-rounded:hover {
+    background-color: rgba(15, 100, 230, 0.1);
+  }
+  
+  .button-tacvu-grid {
+    background-color: rgba(15, 100, 230, 0.1);
+    border: 0px !important;
+  }
+  
+  .button-tacvu-grid-danger {
+    background-color: rgba(224, 27, 34, 0.1) !important;
+    border: 0px !important;
+  }
+  
+  .button-tacvu-grid:hover {
+    background-color: rgba(15, 100, 230, 0.1);
+  }
+  
+  .button-tacvu-grid-danger {
+    background-color: rgba(224, 27, 34, 0.1) !important;
+    border: 0px !important;
+  }
+  .btn-filter-header {
+    font-size: 2rem;
+  }
+  
+  
+  .panel-custom {
+    width: 100%;
+    height: auto;
+  }
+  
+  .panel-header {
+    width: 100%;
+    height: 4rem;
+    background-color: rgba(15, 100, 230, 0.05);
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+  }
+  
+  .panel-header div {
+    padding-top: 1.25rem;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .panel-body {
+    width: 100%;
+    height: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .panel-body-table {
+    width: 100%;
+    height: auto;
+  }
+  
+  :host ::ng-deep #dialog .p-dialog-content {
+    padding: 0 !important;
+    overflow-x: hidden;
+  }
+  
+  .card-custom {
+    background: var(--surface-card);
+    border: 1px solid var(--surface-border);
+    //margin-left: 1rem;
+    box-shadow: var(--card-shadow);
+    border-radius: 12px;
+  }
+  
+  .grid-container-no-boder {
+    display: grid;
+    grid-template-columns: 5% 20% 25% 15% 15% auto;
+    padding: 0.75rem;
+  }
+
+  .grid-container-no-boder-1 {
+    display: grid;
+    grid-template-columns: 5% 20% 1% 18% 1% 18% 1% 15% 1% 15% ;
+    padding: 0.75rem;
+  }
+  
+  .grid-template-filter {
+    display: flex;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }

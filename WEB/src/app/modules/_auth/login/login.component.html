@@ -1,0 +1,97 @@
+<!-- <style>
+    .padding-1rem {
+        padding: 1rem;
+    } 
+</style>
+
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+        <div class="col-12 xl:col-6"
+            style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+            <div class="h-full w-full m-0 py-7 px-4"
+                style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                
+                <div class="text-center mb-5">
+                    <img src="assets/images/logo-png-01.png" alt="Image" height="150" class="mb-3">
+                </div>
+
+                <form (ngSubmit)="signin()">
+                    <div class="w-full md:w-10 mx-auto">
+                        <label for="teeeee" class="block text-900 font-medium text-xl mb-2">Tên đăng nhập</label>
+                        <input class="w-full mb-3 padding-1rem" name="teeeee" id="test" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" placeholder="Tên đăng nhập" type="text" pInputText>
+                    </div>
+                    <div class="w-full md:w-10 mx-auto">
+                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Mật khẩu</label>
+                            <p-password id="password1" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Mật khẩu" [toggleMask]="true"
+                                styleClass="w-full mb-3"></p-password>
+                        <p-messages [value]="msgs"></p-messages>
+                        
+                        <button pButton pRipple label="Đăng nhập" class="w-full p-3 text-xl" (click)="signin()"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<body>
+	<section>
+		<div class="container">
+			<div class="user signinBx">
+				<div class="imgBx"><img
+						src="https://toigingiuvedep.vn/wp-content/uploads/2021/11/hinh-anh-do-an-cute-cuc-yeu.jpg"
+						alt="" /></div>
+				<div class="formBx">
+					<form action=""  (ngSubmit)="signin()"  style="width: 100%;">
+						<h2>Đăng nhập</h2>
+						<div class="w-full md:w-15 mx-auto">
+							<label for="teeeee" class="block text-900 font-medium text-xl mb-2">Tên đăng nhập</label>
+							<input class="w-full mb-3 padding-1rem" style="height: 38.5px;" name="teeeee" id="test" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" placeholder="Tên đăng nhập" type="text" pInputText>
+						</div>
+						<div class="w-full md:w-15 mx-auto">
+							<label for="password1" class="block text-900 font-medium text-xl mb-2">Mật khẩu</label>
+								<p-password id="password1" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Mật khẩu" [toggleMask]="true"
+									styleClass="w-full mb-3"></p-password>
+								<p-messages [value]="msgs"></p-messages>
+							<button pButton pRipple label="Đăng nhập" class="w-full p-3 text-xl" (click)="signin()"></button>
+						</div>
+						<p class="signup">
+							Bạn chưa có tải khoản?
+							<b (click)="toggleForm()" style="cursor: pointer;"><u>Đăng kí</u>.</b>
+						</p>
+					</form>
+				</div>
+			</div>
+			<div class="user signupBx">
+				<div class="formBx">
+					<form action="" onsubmit="return false;" style="width: 100%;">
+						<h2>Đăng kí tài khoản</h2>
+						<div class="w-full md:w-15 mx-auto">
+							<label for="teeeee" class="block text-900 font-medium text-xl">Tên đầy đủ</label>
+							<input class="w-full mb-3 padding-1rem" style="height: 38.5px;" name="teeeee" id="test" [(ngModel)]="obj.TenDayDu" [ngModelOptions]="{standalone: true}" placeholder="Tên đăng nhập" type="text" pInputText>
+						</div>
+						<div class="w-full md:w-15 mx-auto">
+							<label for="teeeee" class="block text-900 font-medium text-xl">Tên đăng nhập</label>
+							<input class="w-full mb-3 padding-1rem" style="height: 38.5px;" name="teeeee" id="test" [(ngModel)]="obj.TenDangNhap" [ngModelOptions]="{standalone: true}" placeholder="Tên đăng nhập" type="text" pInputText>
+						</div>
+						<div class="w-full md:w-15 mx-auto">
+							<label for="password1" class="block text-900 font-medium text-xl">Mật khẩu</label>
+							<p-password id="password1" [ngModelOptions]="{standalone: true}" [(ngModel)]="obj.MatKhau" placeholder="Mật khẩu" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+						</div>
+						<div class="w-full md:w-15 mx-auto">
+							<label for="password1" class="block text-900 font-medium text-xl">Xác nhận mật khẩu</label>
+							<p-password id="password1" [ngModelOptions]="{standalone: true}" [(ngModel)]="obj.XacNhanMatKhau" placeholder="Xác nhận mật khẩu" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+						</div>
+						<button pButton pRipple label="Đăng kí" class="w-full p-3 text-xl" (click)="signup()"></button>
+						<p class="signup"> Bạn đã có tài khoản?
+						<b (click)="toggleForm()" style="cursor: pointer;"><u>Đăng nhập</u>.</b>
+						</p>
+					</form>
+				</div>
+				<div class="imgBx"><img src="https://img.meta.com.vn/Data/image/2022/05/17/hinh-do-an-cute-14.jpg" alt="" /></div>
+			</div>
+		</div>
+	</section>
+</body>
+
+<p-toast position="bottom-right"></p-toast>

@@ -1,0 +1,167 @@
+
+<div>
+  <app-header></app-header>
+</div>
+<div>
+  <main>
+    <!-- - BANNER-->
+    <div class="banner">
+      <div class="container">
+        <div class="slider-container has-scrollbar">
+
+          <div class="slider-item">
+            <img src="./assets/images/banner-1.jpg" alt="women's latest fashion sale" class="banner-img" >
+          </div>
+
+          <div class="slider-item">
+            <img src="./assets/images/banner-2.jpg" alt="modern sunglasses" class="banner-img">
+          
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!--- CATEGORY -->
+
+    <!-- <div class="category">
+      <div class="container">
+        <div class="category-item-container has-scrollbar">
+          <div class="category-item">
+            <div class="category-img-box">
+              <img src="./assets/images/banhmi.jpg" alt="dress & frock" width="30">
+            </div>
+            <div class="category-content-box">
+              <div class="category-content-flex">
+                <h3 class="category-item-title">Bánh mì</h3>
+                <p class="category-item-amount">(53)</p>
+              </div>
+              <a href="#" class="category-btn">Hiển thị tất cả</a>
+            </div>
+          </div>
+
+          <div class="category-item">
+            <div class="category-img-box">
+              <img src="./assets/images/bia.jpg" alt="winter wear" width="30">
+            </div>
+            <div class="category-content-box">
+              <div class="category-content-flex">
+                <h3 class="category-item-title">Bia</h3>
+                <p class="category-item-amount">(58)</p>
+              </div>
+              <a href="#" class="category-btn">Hiển thị tất cả</a>
+            </div>
+          </div>
+
+         </div>
+      </div>
+    </div> -->
+    <!-- - PRODUCT -->
+
+    <div class="product-container">
+      <div class="container">
+        <!-- - SIDEBAR -->
+        <div class="sidebar has-scrollbar" data-mobile-menu>
+          <div class="sidebar-category">
+            <div class="sidebar-top">
+              <h2 class="sidebar-title">Phân loại</h2>
+            </div>
+
+            <!-- <ul *ngFor="let item of ListPhanLoaiMonAn" class="sidebar-menu-category-list">
+              <li class="sidebar-menu-category">
+                  <div class="menu-title-flex">
+                    <img src="./assets/images/icons/shoes.svg" alt="footwear" class="menu-title-img" width="20" height="20">
+                    <p class="menu-title">{{item.TenMonAnPhanLoai}}</p>
+                  </div>
+              </li>
+            </ul> -->
+
+            <div id="menu">
+              <ul class="tab-item">
+                <!-- <li><a href="#">Item 1</a></li>
+                <li><a href="#">Item 2</a></li>
+                <li><a href="#">Item 4</a></li>
+                <li><a href="#">Item 5</a></li> -->
+                <li  *ngFor="let item of ListPhanLoaiMonAn" (click)="activeTabView(item.ID)"  [ngClass]="{'active': item.active}" style="cursor: pointer;">
+                  <b>{{item.Value}}</b>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="product-showcase mt-5">
+            <h3 class="showcase-heading">Được mua nhiều nhất</h3>
+            <div class="showcase-wrapper" *ngFor="let item of ListMonAnDUocMuaNhieuNhat">
+              <div class="showcase-container" (click)="ShowDetailDoAn(item.ID_MonAn)">
+                <div class="showcase">
+                  <a href="#" class="showcase-img-box">
+                    <img src="{{item.HinhAnhTheHien}}" alt="{{item.TenMonAn}}" width="75" height="75" class="showcase-img">
+                  </a>
+                  <div class="showcase-content">
+                    <a href="#">
+                      <h4 class="showcase-title">{{item.TenMonAn}}</h4>
+                    </a>
+                    <div class="showcase-rating">
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                    </div>
+                    <div class="price-box">
+                      <!-- <del>$5.00</del> -->
+                      <p class="price">{{item.DonGia | number: '1.0-2'}} đ</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-box">
+          <div class="product-main">
+            <p-dataView #data_doan [value]="ListDoAn" [layout]="layout" [paginator]="true" [rows]="15" >
+              <ng-template pTemplate="header">
+                  <div class="flex justify-content-end">
+                      <span class="p-input-icon-left" > 
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" placeholder="Tìm kiếm" [(ngModel)]="ValueSearch" (keyup)="TimKiemDoAn(0)"/>
+                      </span>
+                      <div class="ml-1 mr-1">  </div>
+                      <p-dropdown [options]="ComboboxSort" placeholder="Sắp xếp" optionValue="value" [(ngModel)]="ValueSort" (onChange)="TimKiemDoAn(0)" styleClass="mb-2 md:mb-0"></p-dropdown>
+                  </div>
+              </ng-template>
+              <ng-template let-rowData pTemplate="gridItem">
+                  <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
+                      <div class="p-4 border-1 surface-border surface-card border-round">
+                          <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+                              <span class="flex align-items-center gap-2">
+                                  <i class="pi pi-tag"></i>
+                                  <span class="font-semibold">{{ rowData.TenMonAnPhanLoai }}</span>
+                              </span>
+                              <p-tag [value]="rowData.TenTrangThai" severity="getSeverity(rowData.isOrder)"></p-tag>
+                          </div>
+                          <div class="flex flex-column align-items-center gap-3 py-5" (click)="ShowDetailDoAn(rowData.ID_MonAn)">
+                              <img class="w-9 shadow-2 border-round" [src]="rowData.HinhAnhTheHien" [alt]="rowData.TenMonAn" lazy="loading"/>
+                              <div class="text-2xl font-bold">{{ rowData.TenMonAn }}</div>
+                          </div>
+                          <div class="flex align-items-center justify-content-between">
+                              <span class="text-2xl font-semibold">{{ rowData.DonGia | number: '1.0-2'}} đồng</span>
+                              <button pButton title="Thêm vào giỏ hàng" icon="pi pi-shopping-cart" class="p-button-rounded" [disabled]="!rowData.isOrder" (click)="ThemDonHang(rowData.ID_MonAn)"></button>
+                          </div>
+                      </div>
+                  </div>
+              </ng-template>
+          </p-dataView>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+</div>
+
+<app-doan-detail *ngIf="showDetailDoAnDialog" [ID_MonAn]="ID_MonAn" (closeDetailDoAn)="hideDetailDoAnDialog($event)">
+</app-doan-detail>
+
+<p-toast key="trangchu"></p-toast>

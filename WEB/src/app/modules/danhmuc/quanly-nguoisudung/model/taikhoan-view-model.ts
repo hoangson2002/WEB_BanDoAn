@@ -1,0 +1,24 @@
+export class TaiKhoanViewModel {
+    ID_TaiKhoan: number = 0;
+    TenDayDu: string = '';
+    TenDangNhap: string = '';
+    MatKhau: string = '';
+    SoDienThoai: string = '';
+    Email: string = '';
+    IsKhachHang: boolean = false;
+    Roles: string = '';
+    TrangThai: string = '';
+    GioiTinh: string = '';
+    TenGioiTinh: string = '';
+    IsLock: boolean = false;
+    SoNha: string = '';
+    ID_ChucDanh: number | undefined;
+    TenChucDanh: string = '';
+    ID_TinhThanh: number | undefined;
+    TenTinhThanh: string = '';
+    ID_QuanHuyen: number | undefined;
+    TenQuanHuyen: string = '';
+    ID_PhuongXa: number | undefined;
+    TenPhuongXa: string = '';
+    DiaChi: string = '';
+}

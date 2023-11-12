@@ -1,0 +1,75 @@
+<div class="card">
+    <div class="grid">
+        <div class="col-12">
+            <button pButton pRipple label="Thêm" icon="pi pi-plus" class="p-button-success mr-2" (click)="openThemCauHinhDialog()"></button>
+            <button pButton pRipple label="Xóa" icon="pi pi-trash" class="p-button-danger" (click)="deleteListCauHinh()" [disabled]="!selectedCauHinh || !selectedCauHinh.length"></button>
+        </div>
+        <div class="col-12">
+            <p-table #data_report [value]="ListCauHinh" [(selection)]="selectedCauHinh" [columns]="cols" [rows]="10"  [loading]="loading"
+            [showCurrentPageReport]="true" [rowHover]="true" [paginator]="true"  
+            currentPageReportTemplate="Hiển thị {first} - {last} trong số {totalRecords} bản ghi"
+            responsiveLayout="scroll" styleClass="clm p-datatable-gridlines p-datatable-sm" dataKey="ID_Banner">
+            <ng-template pTemplate="header" let-columns>
+                <tr class="text-center">
+                    <th class="sticky_header grid_header_color" style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="sticky_header grid_header_color" *ngFor="let col of columns"
+                        [ngStyle]="{'min-width': col.width, 'text-align': 'center', 'color': 'white'}">
+                        {{col.header}}
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="columns.length+2" style="font-size: 2rem;">
+                        Không có dữ liệu
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                <tr>
+                    <td><p-tableCheckbox [value]="rowData"></p-tableCheckbox></td>
+                    <td *ngFor="let col of columns" [ngStyle]="{'max-width': col.width , 'text-align': col.align, 'justify-content': col.align}"
+                        [ngSwitch]="col.field">
+                        <p *ngSwitchCase="'STT'">{{ i + 1 }}</p>
+                        <p *ngSwitchCase="'ThoiGian'">
+                            {{rowData['ThoiGian']}}
+                        </p>
+                        <p *ngSwitchCase="'URL'" style=" text-align: center; vertical-align: middle;">
+                            <!-- {{rowData['URL']}} -->
+                            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/blue-t-shirt.jpg' " [alt]="rowData.name" width="50%" class="shadow-4" />
+                        </p>
+                        <p *ngSwitchCase="'Task'">
+                            <button pButton pRipple icon="pi pi-pencil" title="Chỉnh sửa" class="p-button-rounded p-button-outlined button-tacvu-grid mr-2" (click)="openUpdateCauHinh(rowData)"></button>
+                            <button pButton pRipple  icon="pi pi-trash" title="Xóa" class="p-button-rounded p-button-outlined p-button-danger button-tacvu-grid-danger" (click)="deleteRowCauHinh(rowData)"></button>
+                        </p>
+                        <div *ngSwitchDefault class="text-truncate" title="{{rowData[col.field]}}"
+                            style="text-align: left;">
+                            {{rowData[col.field]}}
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<p-dialog id="dialog" [showHeader]="true" [(visible)]="cauhinhDialog" [style]="{width: '700px'}" header="{{LABEL_DIALOG_CONFIG}}" 
+[modal]="true" [draggable]="true" [resizable]="true">
+    <ng-template pTemplate="content">
+            
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Đóng" icon="pi pi-times" class="p-button-rounded p-button-secondary" (click)="hideCauHinhDialog()"></button>
+        <button pButton pRipple label="Cập nhật" icon="bx bx-import" class="p-button-rounded p-button-info" (click)="saveCauHinh()"></button>
+    </ng-template>
+</p-dialog>
+<!-- <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + rowData.image" [alt]="rowData.name" width="50" class="shadow-4" /></td> -->
+
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '500px'}"></p-confirmDialog>

@@ -1,0 +1,73 @@
+/* CSS Grid Header */
+::ng-deep .grid_header_color {
+    // background-color: var(--primary-color);
+    background-color: f8f9fa !important;
+    //color: var(--primary-color-text);
+    color: black !important;
+    font-weight: 600;
+    height: 50px;
+  }
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th.grid_header_color {
+    //background-color: var(--primary-color);
+    background-color: f8f9fa !important;
+    //color: var(--primary-color-text);
+    color: black !important;
+    font-weight: 600;
+    height: 50px;
+  }
+  ::ng-deep .p-datatable-scrollable .p-datatable-thead > tr > th,
+  .p-datatable-scrollable .p-datatable-tbody > tr > td,
+  .p-datatable-scrollable .p-datatable-tfoot > tr > td {
+    justify-content: center;
+  }
+  
+  :host ::ng-deep.p-datatable-scrollable .p-datatable-tbody > tr > td {
+    justify-content: center;
+  }
+  
+  ::ng-deep p-inputnumber{
+    width: 100%;
+  }
+  
+  ::ng-deep .p-dropdown {
+      width: 100%;
+  }
+  ::ng-deep .p-treeselect {
+    width: 100%;
+  }
+  ::ng-deep .p-password{
+    width: 100%;
+  }
+  
+  ::ng-deep .p-inputnumber{
+    width: 100%;
+  }
+  
+  ::ng-deep  .p-inputtext{
+      width: 100%;
+  }
+  
+  ::ng-deep .p-calendar {
+      width: 100%;
+  }
+  
+  ::ng-deep .p-multiselect {
+    width: 100%;
+  }
+  
+  ::ng-deep .p-inputtextarea  {
+    width: 100%;
+  }
+  
+  
+  ::ng-deep .p-colorpicker-preview, .p-fluid .p-colorpicker-preview.p-inputtext {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+
+  ::ng-deep td > span.p-disabled {
+    opacity: 0.5;
+    background-color: white;
+    color: #000;
+}
+  

@@ -1,0 +1,102 @@
+<div class="card">
+    <div class="grid">
+        <div class="col-12">
+            <button pButton pRipple label="Thêm" icon="pi pi-plus" class="p-button-success mr-2" (click)="openThemPhanLoai()"></button>
+            <button pButton pRipple label="Xóa" icon="pi pi-trash" class="p-button-danger" (click)="deleteListPhanLoai()" [disabled]="!selectedPhanLoaiDoAn || !selectedPhanLoaiDoAn.length"></button>
+        </div>
+        <div class="col-12">
+            <p-table #data_report [value]="ListPhanLoaiDoAn" [(selection)]="selectedPhanLoaiDoAn" [columns]="cols" [rows]="10"  [loading]="loading_grid"
+            [showCurrentPageReport]="true" [rowHover]="true" [paginator]="true"  
+            currentPageReportTemplate="Hiển thị {first} - {last} trong số {totalRecords} bản ghi"
+            responsiveLayout="scroll" styleClass="clm p-datatable-gridlines p-datatable-sm" dataKey="ID_MonAnPhanLoai">
+            <ng-template pTemplate="header" let-columns>
+                <tr class="text-center">
+                    <th class="sticky_header grid_header_color" style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="sticky_header grid_header_color" *ngFor="let col of columns"
+                        [ngStyle]="{'min-width': col.width, 'text-align': 'center', 'color': 'white'}">
+                        {{col.header}}
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="columns.length+2" style="font-size: 2rem;">
+                        Không có dữ liệu
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                <tr>
+                    <td><p-tableCheckbox [value]="rowData"></p-tableCheckbox></td>
+                    <td *ngFor="let col of columns" [ngStyle]="{'max-width': col.width , 'text-align': col.align, 'justify-content': col.align}"
+                        [ngSwitch]="col.field">
+                        <p *ngSwitchCase="'STT'">{{ i + 1 }}</p>
+                        <!-- <p *ngSwitchCase="'HinhAnh'" style=" text-align: center; vertical-align: middle;">
+                            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/blue-t-shirt.jpg' " [alt]="rowData.name" width="25%" class="shadow-4" />
+                        </p> -->
+                        <p *ngSwitchCase="'Task'">
+                            <button pButton pRipple icon="pi pi-pencil" title="Chỉnh sửa" class="p-button-rounded p-button-outlined button-tacvu-grid mr-2" (click)="openUpdatePhanLoaiDoAn(rowData)"></button>
+                            <button pButton pRipple  icon="pi pi-trash" title="Xóa" class="p-button-rounded p-button-outlined p-button-danger button-tacvu-grid-danger" (click)="deleteRowPhanLoai(rowData)"></button>
+                        </p>
+                        <div *ngSwitchDefault class="text-truncate" title="{{rowData[col.field]}}"
+                            style="text-align: left;">
+                            {{rowData[col.field]}}
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<p-dialog id="dialog" [showHeader]="true" [(visible)]="phanloaiDialog" [style]="{width: '700px'}" header="{{LABEL_DIALOG_PHANLOAI_DOAN}}" 
+[modal]="true" [draggable]="true" [resizable]="true">
+    <ng-template pTemplate="body">
+        <div class="grid mt-3">
+            <div class="col-12">
+                <span class="p-float-label">
+                    <input type="text" [(ngModel)]="objPhanLoai.TenMonAnPhanLoai" pInputText  />
+                    <label for="name">Tên phân loại đồ ăn: 
+                        <span class="text-red-500">(*)</span>
+                    </label>
+                </span>
+            </div>
+            <!-- <div class="col-12" style="width: 100%;" id="file_form">
+                <p-fileUpload #fileUpload name="file" [multiple]="true" [customUpload]="true" [maxFileSize]="552428800" (onUpload)="onUpload($event)"
+                    [style]="{width: 'auto', height: 'auto', overflow: 'hidden'}" [showUploadButton]="false" accept="image/*"
+                    chooseLabel="Chọn file" uploadLabel="Tải lên" cancelLabel="Xóa" chooseIcon="bx bx-import">
+                    <ng-template let-file pTemplate="file">
+                        <div class="mb-2">
+                            <div style="display: flex; align-items: center;">
+                                <div class="text-truncate-file" style="width:80%">
+                                    <span>{{file.name}} -
+                                        <span *ngIf="file.size <= 1024">{{file.size}} Byte</span>
+                                        <span *ngIf="file.size <= 1024*1024 && file.size > 1024">{{file.size/1024 | number:
+                                            '1.0-0'}} KB</span>
+                                        <span
+                                            *ngIf="file.size <= 1024*1024*1024 && file.size > 1024 * 1024">{{file.size/1024/1024
+                                            | number: '1.0-0'}} MB</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-fileUpload>
+            </div> -->
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Đóng" icon="pi pi-times" class="p-button-rounded p-button-secondary" (click)="hidePhanLoaiDoAnDialog()"></button>
+        <button pButton pRipple label="Cập nhật" icon="bx bx-import" class="p-button-rounded p-button-info" (click)="saveDialog()"></button>
+    </ng-template>
+</p-dialog>
+<!-- <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + rowData.image" [alt]="rowData.name" width="50" class="shadow-4" /></td> -->
+
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '500px'}"></p-confirmDialog>

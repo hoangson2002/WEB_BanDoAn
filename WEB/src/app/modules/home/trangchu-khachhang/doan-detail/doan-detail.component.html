@@ -1,0 +1,55 @@
+<p-dialog #dialog [(visible)]="DoAnDetailDialog" [closable]="true" [contentStyle]="{width: '64vw', height: '500px'}" [modal]="true"
+    [draggable]="false" [showHeader]="false" [resizable]="false">
+    <ng-template pTemplate="body">
+        <div class="grid-container">
+            <div>
+                <div class="product-image-container">
+                    <img width="250px" class="product-image-featured" id="featured" lazy="loading"
+                        src="{{DataDetail.HinhAnhTheHien}}" alt="Canon Image">
+                </div>
+            </div>
+            <div class="grid">
+                <div class="col-12" ></div>
+                <div class="col-12" ></div>
+                <div class="col-12" ></div>
+                <div class="col-12"  style="padding: 0;">
+                    <h2 class="subtitle subtitle-container">
+                        {{DataDetail.TenMonAn}}
+                    </h2>
+                </div>
+                <!-- <div class="col-12"  style="padding: 0;">
+                        <a href="#" class="reviews"> {{DataDetail.LuotXem}} lượt xem</a>
+                </div> -->
+                <div class="col-12" style="padding: 0;">
+                    <b>Giá: </b> {{DataDetail.DonGia | number: '1.0-2'}} đồng
+                </div>
+                <div class="col-2" style="padding: 21px 0; width: 10%;">
+                    <b>Số lượng: </b>
+                </div>
+                <div class="col-3">
+                    <p-inputNumber mode="decimal" [showButtons]="true" inputId="minmax-buttons" [(ngModel)]="Obj_Order.SoLuong" [min]="1" > </p-inputNumber>
+                </div>
+                <div class="col-12 " style="padding-left: 0;">
+                    <h2>Mô tả chi tiết</h2>
+                </div>
+                <div class="col-12" style="padding: 0; white-space: pre-line;">
+                    <b>- Mô tả: </b> <br>{{DataDetail.MoTa}}
+                </div>
+                <div class="col-12" style="padding: 0;">
+                    <b>- Nơi sản xuất: </b>{{DataDetail.NoiSanXuat}}
+                </div>
+                <div class="col-12" style="padding: 0;">
+                    <b>- Thành phần: </b>{{DataDetail.TenNguyenLieu}}
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Đóng" icon="pi pi-times" class="p-button-rounded p-button-secondary" 
+            (click)="Dong()"></button>
+        <!-- <button pButton pRipple label="Mua ngay" icon="bx bxs-cart" class="p-button-rounded p-button-warning" [disabled]="!DataDetail.isOrder"
+            (click)="Dong()"></button> -->
+        <button pButton pRipple label="Thêm vào giỏ hàng" icon="bx bx-cart-add" class="p-button-rounded p-button-warning" [disabled]="!DataDetail.isOrder"
+            (click)="ThemDonHang()"></button>
+    </ng-template>
+</p-dialog>

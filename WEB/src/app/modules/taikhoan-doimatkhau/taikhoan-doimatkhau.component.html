@@ -1,0 +1,24 @@
+<p-dialog [(visible)]="DiaLog_DoiMatKhau" header="Đổi mật khẩu" [style]="{ height: '390px', width: '500px' } "
+    [modal]="true " class="p-fluid " (onHide)=" Close_DiaLog()">
+    <ng-template pTemplate="content">
+        <div class="field ">
+            <label for="password">Mật khẩu cũ <span class="text-red-500">(*)</span></label>
+            <p-password inputId="password" [feedback]="false" [toggleMask]="true" [(ngModel)]="MatKhauCu">
+            </p-password>
+        </div>
+        <div class="field mt-0">
+            <label for="password">Mật khẩu mới <span class="text-red-500">(*)</span></label>
+            <p-password inputId="password" [feedback]="false" [toggleMask]="true" [(ngModel)]="MatKhauMoi"></p-password>
+        </div>
+        <div class="field mt-0">
+            <label for="password">Nhập lại mật khẩu <span class="text-red-500">(*)</span></label>
+            <p-password inputId="password" [feedback]="false" [toggleMask]="true" [(ngModel)]="NhapLaiMatKhau"></p-password>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple (click)="Exit()" label="HỦY" icon="pi pi-times "
+            class="p-button-rounded p-button-danger"></button>
+        <button pButton pRipple (click)="Save()" label="LƯU" icon="bx bx-save" class="p-button-rounded p-button-info"></button>
+    </ng-template>
+</p-dialog>
+<p-toast key="doimatkhau" position="bottom-right"></p-toast>

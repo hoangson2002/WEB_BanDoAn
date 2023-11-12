@@ -1,0 +1,118 @@
+<div class="card">
+    <div class="grid-container-no-boder-1">
+        <div class="text-center" style="margin: auto;">
+            <button pButton pRipple type="button" icon="bx bx-filter"
+                class="btn-filter-header p-button-rounded p-button-primary p-button-text"></button>
+        </div>
+        <div>
+            <span class="p-float-label">
+                <p-dropdown [options]="ComboboxRoles"  placeholder="Chọn trạng thái" optionValue="ID" optionLabel="Value"  inputId="float-label" 
+                [(ngModel)]="obj_filter.IsKhachHang" filterBy="Value" [filter]="true" (ngModelChange)="ngChangeRoles()"></p-dropdown>
+                <label for="float-label">Vai trò</label>
+            </span>
+        </div>
+        <div></div>
+        <div>
+            <span class="p-float-label">
+                <p-dropdown [options]="ComboboxTaiKhoan" placeholder="Chọn phân loại" optionValue="ID" optionLabel="Value" inputId="float-label" 
+                [(ngModel)]="obj_filter.ID_TaiKhoan" filterBy="Value" [showClear]="true" [filter]="true"></p-dropdown>
+                <label for="float-label">Chọn tài khoản</label>
+            </span>
+        </div>
+        <div></div>
+        <div >
+            <span class="p-float-label">
+                <input pInputText id="username" [(ngModel)]="obj_filter.TenDayDu" />
+                <label htmlFor="username">Tên đầy đủ</label>
+            </span>
+        </div>
+        <div></div>
+        <div >
+            <span class="p-float-label">
+                <input pInputText id="username" [(ngModel)]="obj_filter.TenDangNhap" />
+                <label htmlFor="username">Tên đăng nhập</label>
+            </span>
+        </div>
+
+        <div></div>
+        <div>
+            <span class="p-float-label">
+                <p-dropdown [options]="ComboboxTrangThai"  placeholder="Chọn trạng thái" optionValue="ID" optionLabel="Value"  inputId="float-label" 
+                [(ngModel)]="obj_filter.IsLock" filterBy="Value" [filter]="true"></p-dropdown>
+                <label for="float-label">Trạng thái</label>
+            </span>
+        </div>
+
+    </div>
+    <div class="grid-container-no-boder">
+        <div></div>
+        <div>
+            <div class="grid-template-filter">
+                <div class="button-margin-filter">
+                    <button pButton pRipple label="Tìm kiếm" icon="pi pi-search" class="p-button-secondary mr-2" [loading]="loading_grid" (click)="search()"></button>
+                    <button pButton pRipple label="Thêm mới" icon="pi pi-plus" class="p-button-success mr-2" (click)="openThem()"></button>
+                    <button pButton pRipple label="Xóa" icon="pi pi-trash" class="p-button-danger" (click)="deleteList()" [disabled]="!selectedData || !selectedData.length"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="text-right ml-2 mr-2" style="margin-top: auto;margin-bottom: auto;">
+            <span class="p-input-icon-left" style="width: 100%;">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Tìm kiếm" />
+            </span>
+        </div> -->
+        
+    </div>
+    <div class="grid">
+        <div class="col-12">
+            <p-table #data_report [value]="ListData" [(selection)]="selectedData" [columns]="cols" [rows]="10"  [loading]="loading_grid"
+            [showCurrentPageReport]="true" [rowHover]="true" [paginator]="true"  
+            currentPageReportTemplate="Hiển thị {first} - {last} trong số {totalRecords} bản ghi"
+            responsiveLayout="scroll" styleClass="clm p-datatable-gridlines p-datatable-sm" dataKey="ID_TaiKhoan">
+            <ng-template pTemplate="header" let-columns>
+                <tr class="text-center">
+                    <th class="sticky_header grid_header_color" style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="sticky_header grid_header_color" *ngFor="let col of columns"
+                        [ngStyle]="{'min-width': col.width, 'text-align': 'center', 'color': 'white'}">
+                        {{col.header}}
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="columns.length+2" style="font-size: 2rem;">
+                        Không có dữ liệu
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                <tr>
+                    <td><p-tableCheckbox [value]="rowData"></p-tableCheckbox></td>
+                    <td *ngFor="let col of columns" [ngStyle]="{'max-width': col.width , 'text-align': col.align, 'justify-content': col.align}"
+                        [ngSwitch]="col.field">
+                        <p *ngSwitchCase="'STT'">{{ i + 1 }}</p>
+                        <p *ngSwitchCase="'Task'">
+                            <button pButton pRipple icon="pi pi-pencil" title="Chỉnh sửa" class="p-button-rounded p-button-outlined button-tacvu-grid mr-2" (click)="openUpdate(rowData)"></button>
+                            <button pButton pRipple  icon="pi pi-trash" title="Xóa" class="p-button-rounded p-button-outlined p-button-danger button-tacvu-grid-danger mr-2" (click)="deleteRow(rowData.ID_TaiKhoan)"></button>
+                            <button pButton pRipple  [icon]="!rowData.IsLock? 'pi pi-lock-open' : 'pi pi-lock'" [title]="rowData.IsLock == 0? 'Mở khóa' : 'Khóa'" class="p-button-rounded p-button-outlined p-button-secondary mr-2" (click)="khoaTaiKhoan(rowData)"></button>
+                        </p>
+                        <div *ngSwitchDefault class="text-truncate" title="{{rowData[col.field]}}"
+                            style="text-align: left;">
+                            {{rowData[col.field]}}
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<app-taikhoan-detail *ngIf="isTaiKhoanDetail" [LABEL_HEADER_DIALOG]="LABEL_HEADER_DIALOG" [obj]="obj" (closeDialogTaiKhoanDetail)="hideTaiKhoanDetail($event)"></app-taikhoan-detail>
+<p-toast key="quanly-nguoisudung"></p-toast>
+<p-confirmDialog [style]="{width: '500px'}"></p-confirmDialog>
